@@ -19,7 +19,11 @@ class DatabaseSeeder extends Seeder
             SubCategorySeeder::class,
             FilmIndustrySeeder::class,
             GenericSeeder::class,
-            CelebrityProfileSeeder::class
+            CelebrityProfileSeeder::class,
+            MovieSeeder::class,
+            MoviesCategorySeeder::class,
+            MoviesGenericSeeder::class,
+
         ]);
     }
 }

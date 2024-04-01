@@ -10,4 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class SubCategory extends Model
 {
     use HasFactory;
+
+    public function movies(){
+        return $this->hasMany(MoviesCategory::class, 'sub_category_id', 'id');
+    }
 }

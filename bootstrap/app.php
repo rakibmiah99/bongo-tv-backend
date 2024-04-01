@@ -8,7 +8,7 @@ use \Illuminate\Support\Facades\Route;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         using: function (){
-            Route::middleware('api')
+            Route::middleware(['cors', 'api'])
             ->prefix('v1')
             ->group(base_path('routes/v1.php'));
 
@@ -27,8 +27,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
 
-        $middleware->validateCsrfTokens();
-
+        $middleware->alias([
+           'cors' => \App\Http\Middleware\HandleCorsMiddleware::class
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
 
