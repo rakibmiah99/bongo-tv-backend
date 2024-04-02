@@ -15,8 +15,13 @@ class CategoryPageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'category' => [
+                'name' => $this->name,
+                'slug' => $this->slug
+            ],
             'slider_movies' => CategorySliderMoviesResource::collection($this->slider_movies),
             'data' => SubCategoryResource::collection($this->sub_categories)
+
         ];
     }
 }
