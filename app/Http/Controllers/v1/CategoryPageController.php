@@ -25,8 +25,7 @@ class CategoryPageController extends Controller
         ])->first();
         $data = CategoryPageResource::make($data);
 
-        return $data;
-        return $data->merge(['menus' => $menus])->sortDesc();
+        return $this->sendResponse(200, '', $data);
 
     }
 }

@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             MovieSeeder::class,
             MoviesCategorySeeder::class,
             MoviesGenericSeeder::class,
-
+            CategorySliderSeeder::class,
+            LikeDislikeSeeder::class,
         ]);
     }
 }

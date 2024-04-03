@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserType;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,11 +17,32 @@ class AdminCredentialSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->truncate();
-        User::create([
-            'name' => 'admin',
-            'email' => 'admin@mail.com',
-            'password' => Hash::make(123456),
-            'type' => 'admin'
-        ]);
+
+        $users = [
+            [
+                'name' => 'admin',
+                'email' => 'admin@mail.com',
+                'password' => Hash::make(123456),
+                'type' => UserType::Admin->value
+            ],
+            [
+                'name' => 'Subscriber 1',
+                'email' => 'subscriber@mail.com',
+                'password' => Hash::make(123456),
+                'type' => UserType::Subscriber->value
+            ],
+            [
+                'name' => 'Subscriber 2',
+                'email' => 'subscriber2@mail.com',
+                'password' => Hash::make(123456),
+                'type' => UserType::Subscriber->value
+            ],
+        ];
+
+
+        foreach ($users as $user){
+            User::create($user);
+        }
+
     }
 }

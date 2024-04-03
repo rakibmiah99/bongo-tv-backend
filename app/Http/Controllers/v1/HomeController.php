@@ -32,7 +32,7 @@ class HomeController extends Controller
         $data = $data->first();
         $data->menus = $menus;
         $data = HomeResource::make($data);
-
+        return $this->sendResponse(200, '', $data);
         return $data;
         return $data->merge(['menus' => $menus])->sortDesc();
 

@@ -20,7 +20,7 @@ class CategoryPageResource extends JsonResource
                 'slug' => $this->slug
             ],
             'slider_movies' => CategorySliderMoviesResource::collection($this->slider_movies),
-            'data' => SubCategoryResource::collection($this->sub_categories)
+            'sub_category_and_movies' => SubCategoryResource::collection($this->sub_categories)
 
         ];
     }
