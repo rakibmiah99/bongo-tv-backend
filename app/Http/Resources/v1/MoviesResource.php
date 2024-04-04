@@ -15,12 +15,17 @@ class MoviesResource extends JsonResource
     public function toArray(Request $request): array
     {
         $movie = $this->movie;
-        return  [
+        $data =   [
             'slug' => $movie->slug,
             'name' => $movie->name,
             'play_mode' => $movie->play_mode,
             'rating' => $movie->rating,
-            'thumbnail' => $movie->thumbnail
+            'thumbnail' => $movie->thumbnail,
         ];
+
+        if ($auth = true){
+            $data['like_dislike'] = LikeDislikeResource::make($movie->like_dislike?->first());
+        }
+        return $data;
     }
 }

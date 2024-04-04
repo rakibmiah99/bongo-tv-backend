@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('is_favourite')->default(false);
             $table->foreign('movie_id', 'like_dislikes_movie_id_foreign')->on('movies')->references('id')->cascadeOnDelete();
             $table->foreign('user_id', 'like_dislikes_user_id_foreign')->on('users')->references('id')->cascadeOnDelete();
+            $table->unique(['movie_id', 'user_id'],'like_dislikes_movie_user_group');
             $table->unique(['movie_id', 'user_id', 'like'],'like_dislikes_movie_user_like_group');
             $table->unique(['movie_id', 'user_id', 'dislike'],'like_dislikes_movie_user_dislike_group');
             $table->unique(['movie_id', 'user_id', 'is_favourite'],'like_dislikes_movie_user_is_favourite_group');

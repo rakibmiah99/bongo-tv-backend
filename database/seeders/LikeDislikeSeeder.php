@@ -15,8 +15,8 @@ class LikeDislikeSeeder extends Seeder
     {
         $data = LikeDislike::factory()->count(200)->make();
         $data->each(function ($item){
-            $likeCond = LikeDislike::where($item->only('movie_id', 'user_id', 'like'));
             $cond = LikeDislike::where($item->only('movie_id', 'user_id'));
+            $likeCond = LikeDislike::where($item->only('movie_id', 'user_id', 'like'));
             $dislikeCond = LikeDislike::where($item->only('movie_id', 'user_id', 'dislike'));
             $isFavouriteCond = LikeDislike::where($item->only('movie_id', 'user_id', 'is_favourite'));
             if ($cond->count() > 0){

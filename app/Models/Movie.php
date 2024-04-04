@@ -18,12 +18,16 @@ class Movie extends Model implements HasMedia
     const W9XH16 = ImageSize::w9xh16->value;
     const W3XH4 = ImageSize::w3xh4->value;
     const W4XH3 = ImageSize::w4xh3->value;
-
+    protected $with = [];
 
     function getThumbnailAttribute(): string{
         return $this->getFirstMedia(self::W9XH16)?->original_url ?? '';
     }
     function getCoverAttribute(): string{
         return $this->getFirstMedia(self::W16XH9)?->original_url ?? '';
+    }
+
+    function like_dislike(){
+        return $this->hasMany(LikeDislike::class, 'movie_id', 'id')->where('user_id', 2);
     }
 }

@@ -16,16 +16,9 @@ class HomeController extends Controller
 
     public function index() {
         $data = Category::select('id','slug', 'name')->with([
-            'sub_categories' => function($subCategory){
-                $subCategory->select('id', 'category_id', 'slug', 'name')
-                ->with(['movies' => function($movies){
-                    $movies->with('movie');
-                }]);
-            },
-            'slider_movies' => function($slidersMovies){
-
-            }
-
+            'sub_categories:id,category_id,slug,name',
+            'sub_categories.movies.movie',
+            'slider_movies'
         ])->get();
         $menus = $data->select('slug', 'name');
 
@@ -33,8 +26,5 @@ class HomeController extends Controller
         $data->menus = $menus;
         $data = HomeResource::make($data);
         return $this->sendResponse(200, '', $data);
-        return $data;
-        return $data->merge(['menus' => $menus])->sortDesc();
-
     }
 }
