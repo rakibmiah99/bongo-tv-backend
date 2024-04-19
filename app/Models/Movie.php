@@ -28,6 +28,37 @@ class Movie extends Model implements HasMedia
     }
 
     function like_dislike(){
-        return $this->hasMany(LikeDislike::class, 'movie_id', 'id')->where('user_id', 2);
+        return $this->hasMany(LikeDislike::class, 'movie_id', 'id')->where('user_id', userIdByToken());
     }
+
+    function film_industry(){
+        return $this->belongsTo(FilmIndustry::class, 'film_industry_id', 'id');
+    }
+    function categories(){
+        return $this->hasManyThrough(
+            Category::class,
+            MoviesCategory::class,
+            'category_id',
+            'id'
+        );
+    }
+    function sub_categories(){
+        return $this->hasManyThrough(
+            SubCategory::class,
+            MoviesCategory::class,
+            'sub_category_id',
+            'id'
+        );
+    }
+    function celebrities(){
+        return $this->hasManyThrough(
+            CelebrityProfile::class,
+            MoviesCelebrity::class,
+            'celebrity_profile_id',
+            'id'
+        );
+    }
+
+
+
 }

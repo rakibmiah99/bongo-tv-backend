@@ -27,7 +27,7 @@ class AuthController extends Controller
         if ($login_option == LoginOptions::Mobile->value){
             $user = User::firstOrCreate($data);
             $user = $this->getUserWithHiddenField($user);
-            $user['token'] = $user->createToken('Subscriber Token')->accessToken;
+            $user['token'] = $user->createToken('Subscriber Token')->plainTextToken;
             return $user;
         }
         else if($login_option == LoginOptions::Email->value){

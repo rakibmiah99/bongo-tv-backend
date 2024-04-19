@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
             CategorySliderSeeder::class,
             LikeDislikeSeeder::class,
             PlayListSeeder::class,
-            PlayListMovieSeeder::class
+            PlayListMovieSeeder::class,
+            WatchHistorySeeder::class,
+            MoviesCelebritySeeder::class
         ]);
     }
 }
