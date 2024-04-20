@@ -17,6 +17,8 @@ class MovieController extends Controller
                 'film_industry',
                 'categories',
                 'sub_categories',
+                'seasons',
+                'series'
             ])
             ->first();
 

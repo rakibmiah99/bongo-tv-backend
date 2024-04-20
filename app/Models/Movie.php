@@ -59,6 +59,19 @@ class Movie extends Model implements HasMedia
         );
     }
 
+    function seasons(){
+        return $this->hasMany(MovieSeason::class, 'movie_id', 'id')->with('episodes');
+    }
+
+    function series(){
+        return $this->hasManyThrough(
+            Movie::class,
+            MovieSeries::class,
+            'series_movie_id',
+            'id'
+        );
+    }
+
 
 
 }

@@ -32,6 +32,8 @@ class MovieDetailsResource extends JsonResource
             'sub_categories' => SubCategoryResourceWithOutMovies::collection($this->sub_categories),
             'film_industry' => FilmIndustryResource::make($this->film_industry),
             'celebrities' => CelebrityProfileResource::collection($this->celebrities),
+            'seasons' => $this->seasons,
+            'episodes' => $this->series
         ];
 
         return $data;

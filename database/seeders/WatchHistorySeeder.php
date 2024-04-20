@@ -15,7 +15,7 @@ class WatchHistorySeeder extends Seeder
     {
         $data = WatchHistory::factory()->count(30)->make();
         $data->each(function ($item){
-            $item->firstOrCreate($item->toArray()\);
+            $item->firstOrCreate($item->toArray());
         });
     }
 }
