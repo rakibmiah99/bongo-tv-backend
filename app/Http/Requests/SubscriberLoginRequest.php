@@ -42,6 +42,8 @@ class SubscriberLoginRequest extends FormRequest
                 Rule::exists('users')->where('type', UserType::Subscriber->value),
             ],
             'password' => 'required_if:login_option,email|min:6',
+            'provider_id' => 'required_if:login_option,provider',
+            'provider_name' => 'required_if:login_option,provider',
         ];
     }
 

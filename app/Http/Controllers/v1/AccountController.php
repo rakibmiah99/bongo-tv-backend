@@ -15,6 +15,7 @@ use Illuminate\Pagination\Paginator;
 
 class AccountController extends Controller
 {
+
     function getFavourite(){
         $movies = LikeDislike::User()
             ->where('is_favourite', true)

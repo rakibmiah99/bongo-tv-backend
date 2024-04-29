@@ -28,7 +28,9 @@ class DatabaseSeeder extends Seeder
             PlayListSeeder::class,
             PlayListMovieSeeder::class,
             WatchHistorySeeder::class,
-            MoviesCelebritySeeder::class
+            MoviesCelebritySeeder::class,
+            MovieSeasonSeeder::class,
+            MovieSeriesSeeder::class
         ]);
     }
 }

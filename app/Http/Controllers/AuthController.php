@@ -21,17 +21,25 @@ class AuthController extends Controller
         $data = $request->validated();
     }
 
+    function getUserWithToken($user){
+        $user = $this->getUserWithHiddenField($user);
+        $user['token'] = $user->createToken('Subscriber Token')->plainTextToken;
+        return $user;
+    }
+
     public function subscriberLogin($login_option, SubscriberLoginRequest $request){
         $data =  collect($request->validated())->except('login_option');
         $data = $data->toArray();
         if ($login_option == LoginOptions::Mobile->value){
             $user = User::firstOrCreate($data);
-            $user = $this->getUserWithHiddenField($user);
-            $user['token'] = $user->createToken('Subscriber Token')->plainTextToken;
-            return $user;
+            return $this->getUserWithToken($user);
         }
         else if($login_option == LoginOptions::Email->value){
 
+        }
+        else if ($login_option == "provider"){
+            $user = User::firstOrCreate($data);
+            return $this->getUserWithToken($user);
         }
     }
 
@@ -42,6 +50,8 @@ class AuthController extends Controller
 
 
     function test(){
+
+        return [];
         $clb = CelebrityProfile::first();
 
         $media = $clb->getMedia('*')[1];
