@@ -16,13 +16,12 @@ class HomeResource extends JsonResource
     {
 
         if (!$request->has('limit') || !$request->has('skip')){
-            $data['category'] = [
-                'name' => $this->name,
-                'slug' => $this->slug
-            ];
             $data['slider_movies'] = CategorySliderMoviesResource::collection($this->slider_movies);
         }
-
+        $data['category'] = [
+            'name' => $this->name,
+            'slug' => $this->slug
+        ];
         $data['sub_category_and_movies'] = SubCategoryResource::collection($this->sub_categories);
 
         return $data;

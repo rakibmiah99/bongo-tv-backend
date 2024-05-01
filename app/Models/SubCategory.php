@@ -14,4 +14,16 @@ class SubCategory extends Model
     public function movies(){
         return $this->hasMany(MoviesCategory::class, 'sub_category_id', 'id');
     }
+
+    public function sub_categories_movies(){
+        return $this->hasManyThrough(
+            Movie::class,
+            MoviesCategory::class,
+            'sub_category_id',
+            'id',
+            'id',
+            'movie_id'
+        );
+    }
+
 }
