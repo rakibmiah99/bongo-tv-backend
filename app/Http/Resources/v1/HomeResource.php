@@ -14,13 +14,17 @@ class HomeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'category' => [
+
+        if (!$request->has('limit') || !$request->has('skip')){
+            $data['category'] = [
                 'name' => $this->name,
                 'slug' => $this->slug
-            ],
-            'slider_movies' => CategorySliderMoviesResource::collection($this->slider_movies),
-            'sub_category_and_movies' => SubCategoryResource::collection($this->sub_categories)
-        ];
+            ];
+            $data['slider_movies'] = CategorySliderMoviesResource::collection($this->slider_movies);
+        }
+
+        $data['sub_category_and_movies'] = SubCategoryResource::collection($this->sub_categories);
+
+        return $data;
     }
 }
