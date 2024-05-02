@@ -13,7 +13,7 @@ class MoviesCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $data = MoviesCategory::factory()->count(100)->make();
+        $data = MoviesCategory::factory()->count(1000)->make();
         $data->each(function ($item){
            MoviesCategory::firstOrCreate($item->only('movie_id', 'category_id', 'sub_category_id'));
         });
