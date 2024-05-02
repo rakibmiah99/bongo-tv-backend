@@ -17,7 +17,7 @@ class MovieSeason extends Model
             Movie::class,
             MovieSeries::class,
             'movie_season_id',
-            'id',
+            'id'
         );
     }
 }

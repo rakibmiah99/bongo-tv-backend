@@ -59,10 +59,14 @@ class Movie extends Model implements HasMedia
         );
     }
 
+
+    //session has multi series
     function seasons(){
         return $this->hasMany(MovieSeason::class, 'movie_id', 'id')->with('episodes');
     }
 
+
+    //mutipar
     function series(){
         return $this->hasManyThrough(
             Movie::class,

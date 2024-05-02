@@ -33,7 +33,7 @@ class MovieDetailsResource extends JsonResource
             'film_industry' => FilmIndustryResource::make($this->film_industry),
             'celebrities' => CelebrityProfileResource::collection($this->celebrities),
             'seasons' => $this->seasons,
-            'episodes' => $this->series
+            'episodes' => MoviesResource::collection($this->series)
         ];
 
         return $data;
