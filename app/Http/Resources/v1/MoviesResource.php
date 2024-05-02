@@ -19,6 +19,7 @@ class MoviesResource extends JsonResource
             'name' => $this->name,
             'play_mode' => $this->play_mode,
             'rating' => $this->rating,
+            'description' => $this->description,
             'thumbnail' => $this->thumbnail,
         ];
 
