@@ -47,7 +47,7 @@ class CategoryPageController extends Controller
         $data =  [
             'category' => CategoryResource::make($category),
             'sub_category' => SubCategoryResourceWithOutMovies::make($sub_categories),
-            'movies' => MoviesResource::make($movies)
+            'movies' => MoviesResource::collection($movies)
         ];
 
         return $this->sendResponse(200, '', $data);
