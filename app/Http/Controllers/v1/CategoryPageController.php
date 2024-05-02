@@ -35,11 +35,14 @@ class CategoryPageController extends Controller
     }
 
     public function subCategoryMovies($categoryName,$subCategoryName){
-        $limit = \request()->input('limit', 2);
-        $skip = \request()->input('skip', );
+        $limit = \request()->input('limit', 15);
+        $skip = \request()->input('skip', 0);
         $category =  Category::where('slug', $categoryName)->firstOrFail();
         $sub_categories = $category->sub_categories->where('slug', $subCategoryName)->firstOrFail();
-        $movies = $sub_categories->load('sub_categories_movies')->limit($limit)->skip($skip)->get();
+        $movies = $sub_categories->load(['sub_categories_movies' => function($movies) use($limit, $skip){
+            $movies->limit($limit)->skip($skip);
+        }])->sub_categories_movies;
+
         $data =  [
             'category' => CategoryResource::make($category),
             'sub_category' => SubCategoryResourceWithOutMovies::make($sub_categories),
