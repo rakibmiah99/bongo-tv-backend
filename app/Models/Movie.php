@@ -72,8 +72,22 @@ class Movie extends Model implements HasMedia
             Movie::class,
             MovieSeries::class,
             'series_movie_id',
-            'id'
-        );
+            'id',
+            'id',
+            'series_movie_id'
+        )->whereNull('movie_series.movie_season_id')->select('*');
+    }
+
+    function series_parent(){
+        return $this->belongsTo(MovieSeries::class, 'id', 'movie_id')
+            ->whereNull('movie_season_id')->select('series_movie_id');
+    }
+
+
+
+    function getSeriesMoviesAttribute () {
+        $movies = MovieSeries::where('series_movie_id', $this->series_parent->series_movie_id)->pluck('movie_id');
+        return Movie::whereIn('id', $movies)->get();
     }
 
 

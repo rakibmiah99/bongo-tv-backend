@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
     public function details($slug){
+//        return Movie::where('slug', $slug)->first()->series_movies;
+
+
+
         $movie = Movie::where('slug', $slug)
             ->with([
                 'like_dislike',
@@ -18,7 +22,6 @@ class MovieController extends Controller
                 'categories',
                 'sub_categories',
                 'seasons',
-                'series'
             ])
             ->first();
 
