@@ -16,12 +16,14 @@ use Illuminate\Http\Request;
 
 class CategoryPageController extends Controller
 {
-    public function index($categoryName) {
+    public function index(Request $request, $categoryName) {
+        $limit = $request->input('limit', 5);
+        $skip = $request->input('skip', 0);
         $data = Category::where('slug', $categoryName)->select('id','slug', 'name')->with([
-            'sub_categories' => function($subCategory){
-                $subCategory->select('id', 'category_id', 'slug', 'name')
+            'sub_categories' => function($subCategory) use($skip, $limit){
+                $subCategory->limit($limit, $skip)->select('id', 'category_id', 'slug', 'name')
                     ->with(['movies' => function($movies){
-                        $movies->with('movie')->limit(5)->skip(0);
+                        $movies->with('movie')->limit(10)->skip(0);
                     }]);
             },
             'slider_movies' => function($slidersMovies){

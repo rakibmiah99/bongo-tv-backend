@@ -34,7 +34,7 @@ class HomeController extends Controller implements HasMiddleware
             'sub_categories' => function($sub_categories) use($limit, $skip){
                 $sub_categories->limit($limit)->skip($skip)->orderBy('ordering', 'asc')->with([
                     'movies' => function($movies){
-                        return $movies->with('movie')->limit(5)->skip(0);
+                        return $movies->with('movie')->limit(10)->skip(0);
                     }
                 ]);
             }
