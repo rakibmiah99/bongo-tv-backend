@@ -21,7 +21,7 @@ class CategoryPageController extends Controller
             'sub_categories' => function($subCategory){
                 $subCategory->select('id', 'category_id', 'slug', 'name')
                     ->with(['movies' => function($movies){
-                        $movies->with('movie')->limit(10)->skip(0);
+                        $movies->with('movie')->limit(5)->skip(0);
                     }]);
             },
             'slider_movies' => function($slidersMovies){
