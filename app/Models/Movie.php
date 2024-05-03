@@ -86,7 +86,7 @@ class Movie extends Model implements HasMedia
 
 
     function getSeriesMoviesAttribute () {
-        $movies = MovieSeries::where('series_movie_id', $this->series_parent->series_movie_id)->pluck('movie_id');
+        $movies = MovieSeries::where('series_movie_id', $this?->series_parent?->series_movie_id ?? -123)->pluck('movie_id');
         return Movie::whereIn('id', $movies)->get();
     }
 
