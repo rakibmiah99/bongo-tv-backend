@@ -91,7 +91,7 @@ class Movie extends Model implements HasMedia
             return MovieSeason::where('movie_id', $parent?->season?->movie_id)->get()->map(function ($session) use($parent){
                 $active = $session->id == $parent->movie_season_id;
                 $session['is_active'] = $active;
-                $session['episodes'] = $active ? $session?->first()?->episodes ?? [] : [];
+//                $session['episodes'] = $active ? $session?->first()?->episodes ?? [] : [];
                 return $session;
             });
         }
@@ -99,7 +99,13 @@ class Movie extends Model implements HasMedia
 
 
     function getActiveSeasonMoviesAttribute(){
-        return $this->movies_seasons->where('is_active', true)?->first()?->episodes ?? [];
+        $movies_season = $this->movies_seasons;
+        if ($movies_season->where('is_active', true)->count() > 0){
+            return $movies_season->where('is_active', true)?->first()?->episodes ?? [];
+        }
+        else{
+            return $movies_season?->first()?->episodes ?? [];
+        }
     }
 
 

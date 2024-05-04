@@ -12,6 +12,7 @@ class MovieController extends Controller
     public function details($slug){
 //        return Movie::where('slug', $slug)->first()->seasons_parent;
 //        return Movie::where('slug', $slug)->first()->movies_seasons;
+//        return Movie::where('slug', $slug)->first()->active_season_movies;
 
         $movie = Movie::where('slug', $slug)
             ->with([
