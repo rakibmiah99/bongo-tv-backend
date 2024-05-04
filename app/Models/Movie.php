@@ -50,6 +50,8 @@ class Movie extends Model implements HasMedia
             'id'
         );
     }
+
+
     function celebrities(){
         return $this->hasManyThrough(
             CelebrityProfile::class,
@@ -60,29 +62,45 @@ class Movie extends Model implements HasMedia
     }
 
 
-    //session has multi series
-    function seasons(){
-        return $this->hasMany(MovieSeason::class, 'movie_id', 'id')->with('episodes');
-    }
-
-
-    //mutipar
-    function series(){
-        return $this->hasManyThrough(
-            Movie::class,
-            MovieSeries::class,
-            'series_movie_id',
-            'id',
-            'id',
-            'series_movie_id'
-        )->whereNull('movie_series.movie_season_id')->select('*');
-    }
-
     function series_parent(){
         return $this->belongsTo(MovieSeries::class, 'id', 'movie_id')
             ->whereNull('movie_season_id')->select('series_movie_id');
     }
 
+
+    function seasons(){
+        return $this->hasMany(MovieSeason::class, 'movie_id', 'id');
+    }
+
+    function seasons_parent(){
+        return $this->belongsTo(MovieSeries::class, 'id', 'movie_id')
+            ->whereNull('series_movie_id')
+            ->with('season')
+            ->select('movie_season_id');
+    }
+
+    function getMoviesSeasonsAttribute(){
+        if($this->seasons->count()){
+           return $this->seasons->map(function ($season){
+               $season['is_active'] = false;
+               return $season;
+           });
+        }
+        else{
+            $parent = $this->seasons_parent;
+            return MovieSeason::where('movie_id', $parent?->season?->movie_id)->get()->map(function ($session) use($parent){
+                $active = $session->id == $parent->movie_season_id;
+                $session['is_active'] = $active;
+                $session['episodes'] = $active ? $session?->first()?->episodes ?? [] : [];
+                return $session;
+            });
+        }
+    }
+
+
+    function getActiveSeasonMoviesAttribute(){
+        return $this->movies_seasons->where('is_active', true)?->first()?->episodes ?? [];
+    }
 
 
     function getSeriesMoviesAttribute () {

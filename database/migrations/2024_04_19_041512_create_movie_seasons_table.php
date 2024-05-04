@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description')->nullable();
             $table->foreign('movie_id', 'movie_seasons_movie_id_foreign')->references('id')->on('movies');
-            $table->unique(['movie_id'], 'movie_seasons_movie_id_unique');
+            $table->unique(['movie_id', 'slug'], 'movie_seasons_movie_id_slug_unique');
             $table->timestamps();
         });
     }
