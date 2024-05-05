@@ -4,7 +4,9 @@ namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\MovieDetailsResource;
+use App\Http\Resources\v1\SeasonWiseMovieResource;
 use App\Models\Movie;
+use App\Models\MovieSeason;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -30,5 +32,11 @@ class MovieController extends Controller
 
         return MovieDetailsResource::make($movie);
 
+    }
+
+
+    public function seasonWiseMovie($slug){
+        $season = MovieSeason::where('slug', $slug)->firstOrFail();
+        return SeasonWiseMovieResource::make($season);
     }
 }

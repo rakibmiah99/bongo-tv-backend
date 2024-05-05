@@ -5,6 +5,7 @@ Route::get('/home', [\App\Http\Controllers\v1\HomeController::class, 'index']);
 Route::get('/category/{categoryName}', [\App\Http\Controllers\v1\CategoryPageController::class, 'index']);
 Route::get('/category/{categoryName}/{subCategoryName}', [\App\Http\Controllers\v1\CategoryPageController::class, 'subCategoryMovies']);
 Route::get('/movies/{slug}', [\App\Http\Controllers\v1\MovieController::class, 'details']);
+Route::get('/season/{slug}', [\App\Http\Controllers\v1\MovieController::class, 'seasonWiseMovie']);
 
 
 Route::prefix('account')->middleware(['auth:sanctum'])->group(function (){
