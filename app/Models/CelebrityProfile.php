@@ -13,4 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class CelebrityProfile extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
+    function getImageAttribute(): string{
+        return $this->getFirstMedia()?->original_url ?? '';
+    }
 }

@@ -56,10 +56,25 @@ class Movie extends Model implements HasMedia
         return $this->hasManyThrough(
             CelebrityProfile::class,
             MoviesCelebrity::class,
-            'celebrity_profile_id',
-            'id'
+            'movie_id',
+            'id',
+            'id',
+            'celebrity_profile_id'
         );
     }
+
+
+    public function generics(){
+        return $this->hasManyThrough(
+          GenericType::class,
+          MoviesGeneric::class,
+          'movie_id',
+          'id',
+            'id',
+        'generic_type_id'
+        );
+    }
+
 
 
     function series_parent(){
