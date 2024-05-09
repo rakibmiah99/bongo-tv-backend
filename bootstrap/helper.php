@@ -1,14 +1,31 @@
 <?php
+
+
+use App\Models\User;
+use Laravel\Sanctum\PersonalAccessToken;
+
+if (!function_exists('userByToken')){
+    function userByToken(){
+        $authorization =  \request()->header('authorization');
+        $authorization = explode(' ', $authorization);
+        $token =  PersonalAccessToken::findToken($authorization[1]);
+        $user =  User::find($token?->tokenable_id);
+        return $user ?? null;
+    }
+}
+
+
+
 if (!function_exists('userIdByToken')){
     function userIdByToken(){
-        return auth('sanctum')->id();
+        return userByToken()?->id;
     }
 }
 
 
 if (!function_exists('authCheckByToken')){
     function authCheckByToken(){
-        return auth('sanctum')->check();
+        return (bool)userByToken();
     }
 }
 
