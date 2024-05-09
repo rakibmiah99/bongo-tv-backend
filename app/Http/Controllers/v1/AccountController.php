@@ -20,7 +20,7 @@ class AccountController extends Controller
         $movies = LikeDislike::User()
             ->where('is_favourite', true)
             ->with('movie')
-            ->paginate(4);
+            ->paginate(3);
         $data =  FavouriteMovieResource::collection($movies)->resource;
         return $this->sendResponse(200, '', $data);
     }
@@ -29,14 +29,14 @@ class AccountController extends Controller
         $movies = LikeDislike::User()
             ->where('like', true)
             ->with('movie')
-            ->paginate(4);
+            ->paginate(3);
         $data =  FavouriteMovieResource::collection($movies)->resource;
         return $this->sendResponse(200, '', $data);
     }
     function getPlayList(){
         $movies = PlayListMovie::User()
             ->with('movie')
-            ->paginate(10);
+            ->paginate(3);
 
         $data =  FavouriteMovieResource::collection($movies)->resource;
         return $this->sendResponse(200, '', $data);
@@ -46,7 +46,7 @@ class AccountController extends Controller
     function getWatchHistories(){
         $movies = WatchHistory::User()
             ->with('movie')
-            ->paginate(10);
+            ->paginate(3);
 
         $data =  FavouriteMovieResource::collection($movies)->resource;
         return $this->sendResponse(200, '', $data);
@@ -69,7 +69,6 @@ class AccountController extends Controller
                 if ($data->like){
                     $data->dislike = 0;
                 }
-
             }
             else if ($action === 'dislike'){
                 $data->dislike =  !$data->dislike;

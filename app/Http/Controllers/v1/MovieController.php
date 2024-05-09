@@ -8,11 +8,6 @@ use App\Http\Resources\v1\MovieDetailsResource;
 use App\Http\Resources\v1\SeasonWiseMovieResource;
 use App\Models\Movie;
 use App\Models\MovieSeason;
-use App\Models\User;
-use App\Models\WatchHistory;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class MovieController extends Controller
 {
