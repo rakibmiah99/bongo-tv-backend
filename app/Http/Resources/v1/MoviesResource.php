@@ -15,6 +15,7 @@ class MoviesResource extends JsonResource
     public function toArray(Request $request): array
     {
         $data = [
+            'content_id' => sshEncrypt($this->id),
             'slug' => $this->slug,
             'name' => $this->name,
             'play_mode' => $this->play_mode,
