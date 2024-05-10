@@ -6,6 +6,8 @@ Route::get('/category/{categoryName}', [\App\Http\Controllers\v1\CategoryPageCon
 Route::get('/category/{categoryName}/{subCategoryName}', [\App\Http\Controllers\v1\CategoryPageController::class, 'subCategoryMovies']);
 Route::get('/movies/{slug}', [\App\Http\Controllers\v1\MovieController::class, 'details']);
 Route::get('/season/{slug}', [\App\Http\Controllers\v1\MovieController::class, 'seasonWiseMovie']);
+Route::get('/package', [\App\Http\Controllers\v1\PackageController::class, 'get']);
+Route::get('/package/{uuid}', [\App\Http\Controllers\v1\PackageController::class, 'uuidWiseData']);
 
 
 Route::prefix('account')->middleware(['auth:sanctum'])->group(function (){
