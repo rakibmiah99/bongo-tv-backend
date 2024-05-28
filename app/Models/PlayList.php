@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class PlayList extends Model
 {
     use HasFactory;
-
+    protected $guarded = [];
     function scopeUser(Builder $builder){
         $builder->where('user_id', userId());
     }

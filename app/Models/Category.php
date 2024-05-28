@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\OrderingScope;
 use App\Observers\CategoryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-#[ObservedBy([CategoryObserver::class])]
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+#[ObservedBy([CategoryObserver::class]), ScopedBy(OrderingScope::class)]
 class Category extends Model
 {
-    use HasFactory;
-
+    use HasFactory, SoftDeletes;
+    protected $guarded = [];
     public function scopeVisible(Builder $builder){
         $builder->where('visibility', true);
     }

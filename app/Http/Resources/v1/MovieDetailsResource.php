@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1;
 
+use App\Models\PlayListMovie;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,8 +15,10 @@ class MovieDetailsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $in_playlist  =  PlayListMovie::where('movie_id', $this->id)->whereRelation('play_list', 'user_id', '=', userIdByToken());
+
         $data = [
-            'id' => $this->id,
+            'id' => sshEncrypt($this->id),
 //            'film_industry_id' => $this->film_industry_id,
             'slug' => $this->slug,
             'name' => $this->name,
@@ -27,11 +30,11 @@ class MovieDetailsResource extends JsonResource
             'video_path' => $this->video_path,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'like_dislike' => $this->like_dislike,
+            'like_dislike' => LikeDislikeResource::make($this->like_dislike?->first()),
             'categories' => CategoryResource::collection($this->categories),
             'sub_categories' => SubCategoryResourceWithOutMovies::collection($this->sub_categories),
             'film_industry' => FilmIndustryResource::make($this->film_industry),
-            'celebrities' => CelebrityProfileResource::collection($this->celebrities),
+            'in_playlist' => $in_playlist->count(),
             'seasons' => $this->movies_seasons,
             'celebrities' => CelebrityProfileResource::collection($this->celebrities),
             'generics' => GenericsResource::collection($this->generics),

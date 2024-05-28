@@ -84,4 +84,39 @@ class AccountController extends Controller
             return $this->sendResponse(200, '', $data);
         }
     }
+
+    function addOrRemoveToLibrary(Request $request){
+        try{
+            $playList = PlayList::firstOrCreate([
+                'user_id' =>  userId()
+            ],
+                [
+                    'name' => 'default'
+                ]
+            );
+
+            $movie_id = sshDecrypt($request->content_id);
+            if(!$movie_id){
+
+            }
+            $playListMovieData = ['movie_id' => $movie_id, 'play_list_id' =>  $playList->id];
+            $hasData = PlayListMovie::where($playListMovieData)->count();
+
+            if ($hasData){
+                PlayListMovie::where($playListMovieData)->delete();
+                return $this->sendResponse(200, 'removed from library', [
+                   'in_playlist' => false,
+                ]);
+            }
+            else{
+                PlayListMovie::insert($playListMovieData);
+                return $this->sendResponse(200, 'added successfully', [
+                    'in_playlist' => true,
+                ]);
+            }
+        }
+        catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+    }
 }

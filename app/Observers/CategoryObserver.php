@@ -10,6 +10,7 @@ class CategoryObserver
 
     public function creating(Category $category): void{
         $category->slug = Str::slug($category->name);
+        $category->ordering = Category::withTrashed()->max('ordering') + 1;
     }
 
     /**
@@ -25,7 +26,7 @@ class CategoryObserver
      */
     public function updated(Category $category): void
     {
-        //
+        $category->slug = Str::slug($category->name);
     }
 
     /**

@@ -2,14 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\OrderingScope;
 use App\Observers\SubCategoryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-#[ObservedBy([SubCategoryObserver::class])]
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+#[ObservedBy([SubCategoryObserver::class]), ScopedBy([OrderingScope::class])]
 class SubCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+    protected $guarded = [];
 
     public function movies(){
         return $this->hasMany(MoviesCategory::class, 'sub_category_id', 'id');

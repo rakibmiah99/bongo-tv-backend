@@ -130,5 +130,7 @@ class Movie extends Model implements HasMedia
     }
 
 
-
+    public function play_list_movie(){
+        return $this->hasMany(PlayListMovie::class,'movie_id', 'id');
+    }
 }

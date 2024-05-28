@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\LoginOptions;
+use App\Enums\UserType;
 use App\Http\Requests\AdminLoginRequest;
 use App\Http\Requests\SubscriberLoginRequest;
 use App\Models\CelebrityProfile;
 use App\Models\User;
 use FFMpeg\Format\Video\X264;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +21,12 @@ class AuthController extends Controller
 {
     public function adminLogin(AdminLoginRequest $request){
         $data = $request->validated();
+        $data['type'] = UserType::Admin->value;
+        if (Auth::attempt($data)){
+            $user = $this->getUserWithHiddenField(\auth()->user());
+            $user['token'] = $user->createToken('Subscriber Token')->plainTextToken;
+            return $this->adminResponse('login successfully', $user);
+        }
     }
 
     function getUserWithToken($user){

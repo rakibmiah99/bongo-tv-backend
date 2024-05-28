@@ -16,6 +16,7 @@ Route::prefix('account')->middleware(['auth:sanctum'])->group(function (){
     Route::get('/play-list-movies', [\App\Http\Controllers\v1\AccountController::class, 'getPlayList']);
     Route::get('/watch-histories', [\App\Http\Controllers\v1\AccountController::class, 'getWatchHistories']);
     Route::post('/favourite/action', [\App\Http\Controllers\v1\AccountController::class, 'actionFavourite']);
+    Route::post('/add-to-library', [\App\Http\Controllers\v1\AccountController::class, 'addOrRemoveToLibrary']);
 });
 
 

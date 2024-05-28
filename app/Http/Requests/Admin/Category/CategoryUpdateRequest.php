@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Category;
 
+use App\Models\Category;
+use App\Rules\UniqueSlug;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMovieRequest extends FormRequest
+class CategoryUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,12 @@ class StoreMovieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'string',
+                'required',
+                new UniqueSlug(Category::class, $this->category->id)
+            ],
+            'visibility' => 'nullable|boolean'
         ];
     }
 }

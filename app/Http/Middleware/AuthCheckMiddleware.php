@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserType;
 use Closure;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthCheckMiddleware
@@ -16,6 +17,9 @@ class AuthCheckMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (auth()->user()->type != UserType::Admin->value){
+            throw new AuthenticationException('Unauthenticated');
+        }
         return $next($request);
     }
 }

@@ -9,7 +9,9 @@ use Illuminate\Support\Str;
 class SubCategoryObserver
 {
     public function creating(SubCategory $subCategory): void{
+        $ordering_number = SubCategory::where('category_id', $subCategory->category_id)->max('ordering');
         $subCategory->slug = Str::slug($subCategory->name);
+        $subCategory->ordering = $ordering_number + 1;
     }
     /**
      * Handle the SubCategory "created" event.

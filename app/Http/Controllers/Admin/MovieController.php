@@ -1,27 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Movies\StoreMovieRequest;
 use App\Http\Requests\Admin\Movies\UpdateMovieRequest;
+use App\Http\Resources\Admin\MovieResource;
+use App\Message;
 use App\Models\Movie;
+use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $text = $request->text;
+        $column = $request->type ?? "all";
+        $movies = Movie::query();
+        if ($text && $column == 'all'){
+            $movies = $movies->where('name', 'like', '%'.$text."%");
+        }
+
+        $movies = MovieResource::collection($movies->paginate(10))->resource;
+        return $this->adminResponse(Message::FETCH(), $movies);
     }
 
     /**
@@ -36,14 +41,6 @@ class MovieController extends Controller
      * Display the specified resource.
      */
     public function show(Movie $movie)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Movie $movie)
     {
         //
     }
